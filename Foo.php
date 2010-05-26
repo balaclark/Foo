@@ -83,12 +83,6 @@ if (!function_exists('foo')) {
 					default:
 						$args[] = $arg;
 				}
-				/*
-				if (is_array($arg)) $args[] = 'Array';
-				else if (is_object($arg)) $args[] = get_class($arg) . ' Object';
-				else if (is_bool($arg)) $args[] = ($arg) ? 'true' : 'false';
-				else $args[] = $arg;
-				*/
 			}
 			
 			$args = implode(', ', $args);
@@ -223,7 +217,6 @@ if (!function_exists('foo')) {
 				padding: 0 0 10px 10px;
 				display: none;
 			";
-
 			echo "<div id='$id' class='debug' style='$div_style'>";
 		    echo "<div onclick='javascript:toggle($id)' id='toggle-$id' style='$title_style'><strong><span>$status</span> $title $meta</strong></div>
 				  <div id='data-$id' class='data' style='$display'>
