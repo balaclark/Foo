@@ -21,13 +21,15 @@ if (!function_exists('fo')) {
 /**
  * Output to the JS console
  *
+ * This is a helper function, it just runs foo with options set for console output
+ *
  * @param object $bar [optional]
  * @param object $title [optional]
  * @return void
  */
 if (!function_exists('foc')) {
-	function foc($bar, $title = null) {
-		foo($bar, $title, null, true);
+	function foc($bar) {
+		foo($bar, null, null, true);
 	}
 }
 
@@ -46,14 +48,56 @@ if (!function_exists('foc')) {
  * @return void
  */
 if (!function_exists('foo')) {
+	
 	function foo($bar = '', $title = null, $open = true, $console = false) {
 
 		// backtrace ---------------------------------------------------------------
 
 	    $debug = debug_backtrace();
 
+		// setup the vars to use in the main output
+
 	    $file = $debug[0]['file'];
 	    $line = $debug[0]['line'];
+
+		// create a debug string in the style of debug_print_backtrace()
+
+		$backtrace = '';
+
+		foreach ($debug as $key => $arr) {
+			
+			$args = array();
+
+			foreach ($arr['args'] as $arg) {
+
+				switch (gettype($arg)) {
+					case 'array':
+						$args[] = 'Array';
+						break;
+					case 'object':
+						$args[] = get_class($arg) . ' Object';
+						break;
+					case 'boolean':
+						$args[] = ($arg) ? 'true' : 'false';
+						break;
+					default:
+						$args[] = $arg;
+				}
+				/*
+				if (is_array($arg)) $args[] = 'Array';
+				else if (is_object($arg)) $args[] = get_class($arg) . ' Object';
+				else if (is_bool($arg)) $args[] = ($arg) ? 'true' : 'false';
+				else $args[] = $arg;
+				*/
+			}
+			
+			$args = implode(', ', $args);
+			$function = (isset($arr['class'])) ? $arr['class'] . '->' .$arr['function'] : $arr['function'];
+
+			$backtrace .= "#$key  $function($args) called at [{$arr['file']}:{$arr['line']}]\n";
+		}
+		
+		// setup title based on object type
 
 		if (is_null($title)) $title = ucfirst(gettype($bar));
 
@@ -71,52 +115,46 @@ if (!function_exists('foo')) {
 				break;
 		}
 
-		// output javascript -------------------------------------------------------
-
+		// Output ------------------------------------------------------------------
+		
 		$id = rand();
-
+		
 		// JS console output
+
 		if ($console) {
-			echo "
+			?>
 			<script type='text/javascript'>
 			<!--
 			if (typeof(console) !== 'undefined') {
 				//console.log(".@json_encode($bar).",".@json_encode("$file [called line:$line][length:$meta]").");
-				console.log(".@json_encode($bar).");
+				console.log("<?php echo @json_encode($bar) ?>");
 			}
 			-->
 			</script>
-			";
+			<?php
 		}
-		// HTML output
-		else {
 
-			echo "
+		// HTML output
+
+		else {
+			?>
 			<script type='text/javascript'>
 			<!--
 			function toggle(id) {
+				
 				var toggle = document.getElementById('toggle-'+id);
 				var elm_status = toggle.firstChild.firstChild;
 				var txt_status = toggle.firstChild.firstChild.firstChild;
 				var code = document.getElementById('data-'+id);
-
-				var open = '[+]';
-				var close = '[-]'
+				var open = '[+]', close = '[-]';
 
 				elm_status.style.display = 'inline';
 				txt_status.nodeValue = close;
-
-			";
-			if ($open) {
-				echo "
-				txt_status.nodeValue = close;
-				";
-			} else {
-				echo "
+				<?php if ($open): ?>
+				txt_status.nodeValue = close
+				<?php else: ?>
 				txt_status.nodeValue = open;
-				";
-			}
-			echo "
+				<?php endif; ?>
 				// show
 				if (code.style.display === 'none') {
 					code.style.display = 'block';
@@ -128,9 +166,19 @@ if (!function_exists('foo')) {
 					txt_status.nodeValue = open;
 				}
 			}
+
+			function toggle_backtrace(id) {
+				
+				var toggle = document.getElementById('backtrace-'+id);
+
+				if (toggle.style.display == 'none')
+					toggle.style.display = 'block';
+				else
+					toggle.style.display = 'none';
+			}
 			-->
 			</script>
-			";
+			<?php
 
 			$display = !$open ? "display:none;" : '';
 			$status = $open ? "[-]" : "[+]";
@@ -152,18 +200,35 @@ if (!function_exists('foo')) {
 				font-size:12px;
 				cursor:pointer;
 			';
+			$p_style = "
+				font-size: 13px;
+				margin: 0;
+				padding: 5px 0 8px;
+				cursor: pointer;
+			";
 			$pre_style = "
+				margin: 0;
 				color:#fff;
 				background-color:#4e4e4e;
 				padding:5px;
 				border-left:solid 5px #d7d7d7;
 				font-size:13px;
 			";
+			$backtrace_link_style = "
+				cursor: pointer;
+				font-size: 11px;
+			";
+			$backtrace_style = "
+				margin: 0;
+				padding: 0 0 10px 10px;
+				display: none;
+			";
 
 			echo "<div id='$id' class='debug' style='$div_style'>";
 		    echo "<div onclick='javascript:toggle($id)' id='toggle-$id' style='$title_style'><strong><span>$status</span> $title $meta</strong></div>
 				  <div id='data-$id' class='data' style='$display'>
-		          <p style='font-size:13px'>$file, [line: $line]</p>
+		          <p style='$p_style' onclick='javascript:toggle_backtrace($id)'>[$file:$line]</p>
+				  <pre id='backtrace-$id' style='$backtrace_style'>$backtrace</pre>
 		          <pre id='pre-$id' style='$pre_style'>";
 		    print_r($bar);
 		    echo '</pre>';
