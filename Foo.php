@@ -121,7 +121,7 @@ if (!function_exists('foo')) {
 			<!--
 			if (typeof(console) !== 'undefined') {
 				//console.log(".@json_encode($bar).",".@json_encode("$file [called line:$line][length:$meta]").");
-				console.log("<?php echo @json_encode($bar) ?>");
+				console.log(<?php echo @json_encode($bar) ?>);
 			}
 			-->
 			</script>
@@ -194,29 +194,29 @@ if (!function_exists('foo')) {
 				font-size:12px;
 				cursor:pointer;
 			';
-			$p_style = "
+			$p_style = '
 				font-size: 13px;
 				margin: 0;
 				padding: 5px 0 8px;
 				cursor: pointer;
-			";
-			$pre_style = "
+			';
+			$pre_style = '
 				margin: 0;
 				color:#fff;
 				background-color:#4e4e4e;
 				padding:5px;
 				border-left:solid 5px #d7d7d7;
 				font-size:13px;
-			";
-			$backtrace_link_style = "
+			';
+			$backtrace_link_style = '
 				cursor: pointer;
 				font-size: 11px;
-			";
-			$backtrace_style = "
+			';
+			$backtrace_style = '
 				margin: 0;
 				padding: 0 0 10px 10px;
 				display: none;
-			";
+			';
 			echo "<div id='$id' class='debug' style='$div_style'>";
 		    echo "<div onclick='javascript:toggle($id)' id='toggle-$id' style='$title_style'><strong><span>$status</span> $title $meta</strong></div>
 				  <div id='data-$id' class='data' style='$display'>
