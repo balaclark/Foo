@@ -8,8 +8,9 @@ h2. Usage
 
 Foo is comprised of 3 functions:
 
-|   foc    | Console |  |
-|   fo     | Screen  |  |
+	* foo
+	* foc
+	* fo
 
 h3. Foo
 
