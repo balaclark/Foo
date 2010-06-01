@@ -9,7 +9,7 @@
  * @return void
  */
 if (!function_exists('fo')) {
-	function fo($bar, $name = null) {
+	function fo($bar) {
 		if (is_string($bar) || is_numeric($bar) || is_bool($bar)) {
 			echo "<p style='margin:0;padding:0;background-color:#fff;color:#000;font-family:courier;font-size:12px;'>
 					$bar
