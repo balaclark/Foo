@@ -22,7 +22,7 @@ h4. Arguments
 | _mixed_ $*bar* | Any array, object, string, number, boolean, etc. |
 | _string_ $*title* | An optional title for the output, defaults to the object type |
 | _boolean_ $*open* | Should the dislay be open or minimised by default? |
-| _boolean_ $*console* | Output in the console or to the screen?
+| _boolean_ $*console* | Output in the console or to the screen? |
 
 h3. Foc
 
