@@ -8,9 +8,9 @@ h2. Usage
 
 Foo is comprised of 3 functions:
 
-	* foo
-	* foc
-	* fo
+	*foo
+	*foc
+	*fo
 
 h3. Foo
 
