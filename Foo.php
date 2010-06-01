@@ -162,13 +162,17 @@ if (!function_exists('foo')) {
 			}
 
 			function toggle_backtrace(id) {
-				
-				var toggle = document.getElementById('backtrace-'+id);
 
-				if (toggle.style.display == 'none')
+				var toggle = document.getElementById('backtrace-'+id);
+				var toggle_status = document.getElementById('backtrace-'+id+'-status');
+
+				if (toggle.style.display == 'none') {
 					toggle.style.display = 'block';
-				else
+					toggle_status.innerHTML = '[-]';
+				} else {
 					toggle.style.display = 'none';
+					toggle_status.innerHTML = '[+]';
+				}
 			}
 			-->
 			</script>
@@ -220,7 +224,7 @@ if (!function_exists('foo')) {
 			echo "<div id='$id' class='debug' style='$div_style'>";
 		    echo "<div onclick='javascript:toggle($id)' id='toggle-$id' style='$title_style'><strong><span>$status</span> $title $meta</strong></div>
 				  <div id='data-$id' class='data' style='$display'>
-		          <p style='$p_style' onclick='javascript:toggle_backtrace($id)'>[$file:$line]</p>
+		          <p style='$p_style' onclick='javascript:toggle_backtrace($id)'>[$file:$line]<span id='backtrace-$id-status'>[+]</span></p>
 				  <pre id='backtrace-$id' style='$backtrace_style'>$backtrace</pre>
 		          <pre id='pre-$id' style='$pre_style'>";
 		    print_r($bar);
