@@ -8,20 +8,33 @@ h2. Usage
 
 Foo is comprised of 3 functions:
 
-| Function | Display | Notes
-|   foo    | Screen  | Output any type (string / array / object, etc.). Includes
-					   a full debug backtrace
-|   foc    | Console | Output any type, no backtracing.
-|   fo     | Screen  | Output a single line, only works with strings / numbers, no backtracing
+|   foc    | Console |  |
+|   fo     | Screen  |  |
 
-h3. Foo()
+h3. Foo
 
-h4. Parameters
+Output data in any type (string / array / object, etc.) to the screen. Includes
+a (minimised by default) full debug backtrace.
 
-	* $expression
-	* $title
-	* $open
-	* $console
+h4. Arguments
+
+| _mixed_ $*bar* | Any array, object, string, number, boolean, etc. |
+| _string_ $*title* | An optional title for the output, defaults to the object type |
+| _boolean_ $*open* | Should the dislay be open or minimised by default? |
+| _boolean_ $*console* | Output in the console or to the screen?
+
+h3. Foc
+
+Output data in any type (string / array / object, etc.) to the javascript console.
+This function a shortcut to running foo with no extra arguments in console mode.
+
+| _mixed_ $*bar* | Any array, object, string, number, boolean, etc. |
+
+h3. Fo
+
+Output a single line of data, only works with strings / numbers, no backtracing.
+
+| _mixed_ $*bar* | Any array, object, string, number, boolean, etc. |
 
 h2. License
 
@@ -31,7 +44,7 @@ Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
-   http://www.apache.org/licenses/LICENSE-2.0
+http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
