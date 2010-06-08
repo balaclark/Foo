@@ -88,7 +88,10 @@ if (!function_exists('foo')) {
 			$args = implode(', ', $args);
 			$function = (isset($arr['class'])) ? $arr['class'] . '->' .$arr['function'] : $arr['function'];
 
-			$backtrace .= "#$key  $function($args) called at [{$arr['file']}:{$arr['line']}]\n";
+			// backtrace is broken if call_user_func() is part of the trace
+			if (isset($arr['file'])) {
+				$backtrace .= "#$key  $function($args) called at [{$arr['file']}:{$arr['line']}]\n";
+			}
 		}
 		
 		// setup title based on object type
@@ -203,6 +206,7 @@ if (!function_exists('foo')) {
 				margin: 0;
 				padding: 5px 0 8px;
 				cursor: pointer;
+				color: #000;
 			';
 			$pre_style = '
 				margin: 0;
