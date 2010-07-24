@@ -9,11 +9,25 @@
  * @return void
  */
 if (!function_exists('fo')) {
-	function fo($bar) {
+	function fo($bar, $title = null) {
 		if (is_string($bar) || is_numeric($bar) || is_bool($bar)) {
-			echo "<p style='margin:0;padding:0;background-color:#fff;color:#000;font-family:courier;font-size:12px;'>
-					$bar
-				 </p>";
+			echo "<p style='margin:0;padding:0;background-color:#fff;color:#000;font-family:courier;font-size:12px;'>";
+			
+			if ($title !== null) {
+				echo '<strong>' . $title . ' :</strong> ';
+			}
+				
+			echo $bar . "</p>";
+		}
+		elseif(is_array($bar) || is_object($bar)) {
+			if ($title !== null) {
+				echo "<strong style='margin:0;padding:0;background-color:#fff;color:#000;font-family:courier;font-size:12px;'>
+						$title :
+					  </strong>";
+			}
+			echo "<pre style='margin:0;padding:0;background-color:#fff;color:#000;font-family:courier;font-size:12px;'>";
+			print_r($bar);
+			echo '</pre>';
 		}
 	}
 }
