@@ -33,7 +33,8 @@ This function a shortcut to running foo with no extra arguments in console mode.
 
 h3. Fo
 
-Output data in any type (string / array / object, etc.) to the screen, minimal styling and no backtracing.
+Output data in any type (string / array / object, etc.) to the screen, minimal styling
+and no backtracing.
 
 | _mixed_ $*bar* | Any array, object, string, number, boolean, etc. |
 
