@@ -3,8 +3,8 @@
 /**
  * Single line string / number output function.
  *
- * A more simple version of Foo. Does not display any code tracing, only works with
- * string / numeric / boolean types.
+ * A more simple version of Foo. Does not display any code tracing, has more
+ * basic styles.
  *
  * @return void
  */
