@@ -16,8 +16,10 @@ if (!function_exists('fo')) {
 			if ($title !== null) {
 				echo '<strong>' . $title . ' :</strong> ';
 			}
-				
-			echo $bar . "</p>";
+
+			if (is_bool($bar)) echo ($bar) ? 'true' : 'false'; else echo $bar;
+
+			echo "</p>";
 		}
 		elseif(is_array($bar) || is_object($bar)) {
 			if ($title !== null) {
